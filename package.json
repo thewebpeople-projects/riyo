@@ -1,0 +1,32 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "School application",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sudheeshshetty/Chat"
+  },
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sudheesh Shetty-thewebpeople.in",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.4.7",
+    "body-parser": "^1.16.1",
+    "express": "^4.14.0",
+    "ip": "^1.1.4",
+    "mongoose": "^4.7.8",
+    "socket.io": "^1.7.2",
+    "winston": "^2.3.1"
+  },
+  "config": {
+    "server": {
+      "port": "8000"
+    },
+    "db": {
+      "url": "mongodb://localhost:27017/publicTransport"
+    }
+  }
+}
