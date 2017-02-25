@@ -22,13 +22,15 @@ module.exports = function (app,jwt){
     */
     app.post('/login',authenticate(logger,bodyParser,model,jwt));
     
+    // route middleware to verify a token
+    app.use(routeauth(jwt));
+    
     /*
     Description - Authenticate User
     URL - /register/students?"name":{name},"Class":{class},"section":{section},"rollno":{rollno},"studentid":{student_id},"password":{password},"gender":{gender},"image":image_path,"dob":{dob},"address":{address},fathers_name:{father},mothers_name:{mother},ration_card_proof:{ration_path},aadharno:{aadharno},phone:{phone},email:{email}
     */
     app.post('/register/students',studentsroute(logger,bodyParser,model,mkdirp));
     
-    // route middleware to verify a token
-    app.use(routeauth());
+    
 
 }

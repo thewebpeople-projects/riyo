@@ -1,4 +1,7 @@
-module.exports = function(logger,bodyParser,model){
+var config=require('../config.js');
+
+module.exports = function(logger,bodyParser,model,jwt){
+    
     return function(req,res){
         loginuser=req.body.loginuser;
 
@@ -14,13 +17,12 @@ module.exports = function(logger,bodyParser,model){
                     if(doc.password != req.body.password){
                         res.json({ success: false, message: 'Authentication failed. Wrong password.' });
                     }else{
-                        //if user is found and password is right
+                        console.log(config.secret)
+                        //if doc is found and password is right
                         // create a token
-                        var token = jwt.sign(user, app.get('superSecret'), {
-                            expiresInMinutes: 1440 // expires in 24 hours
-                        });
+                        var token = jwt.sign(doc, String(config.secret));
 
-                        res.json({
+                        res.status(200).json({
                             success: true,
                             message: 'Authentication successful',
                             token: token
@@ -29,7 +31,7 @@ module.exports = function(logger,bodyParser,model){
                 }
             })
                 .catch(function(err){
-                logger.log('error','Error in authenticating Student'+req.body.username);
+                logger.log('Error','Error in authenticating Student '+req.body.username);
             });
         }
         else if(loginuser=="teacher"){
@@ -49,7 +51,7 @@ module.exports = function(logger,bodyParser,model){
                             expiresInMinutes: 1440 // expires in 24 hours
                         });
 
-                        res.json({
+                        res.status(200).json({
                             success: true,
                             message: 'Authentication successful',
                             token: token

@@ -1,8 +1,9 @@
 save_image=require('../helper/saveimage.js');
+var path = require('path');
 
 module.exports = function(logger,bodyParser,model,mkdirp){
     return function(req,res){
-        console.log(req.body.studentid);
+//        console.log(req.body.studentid);
         student_id=req.body.studentid;
         password=student_id+"@123";
         dir=__dirname+'/../model/images/students/'+student_id+'/';
@@ -10,9 +11,9 @@ module.exports = function(logger,bodyParser,model,mkdirp){
             if (err) logger.log('error','Creating directory for student '+student_id);
             else logger.log('info','Created directory for Student '+student_id);
         });
-        image_path=dir+'photo';
+        image_path=path.resolve(dir+'photo');
         save_image(String(req.body.image),image_path,logger);
-        ration_path=dir+'ration';
+        ration_path=path.resolve(dir+'ration');
         save_image(String(req.body.ration),ration_path,logger);
 
         var student={
@@ -26,15 +27,15 @@ module.exports = function(logger,bodyParser,model,mkdirp){
             "image":image_path,
             "dob":req.body.dob,
             "address":req.body.address,
-            fathers_name:req.body.father,
-            mothers_name:req.body.mother,
-            ration_card_proof:ration_path,
-            aadharno:req.body.aadharno,
-            phone:req.body.phone,
-            email:req.body.email            
+            "fathers_name":req.body.father,
+            "mothers_name":req.body.mother,
+            "ration_card_proof":ration_path,
+            "aadharno":req.body.aadharno,
+            "phone":req.body.phone,
+            "email":req.body.email            
         };
 
-        model.students.findOne({'name':req.body.name,'phone':req.body.phone}).exec()
+        model.students.findOne({'name':req.body.studentid,'phone':req.body.phone}).exec()
             .then(function(doc){
             if(doc==null){
                 return model.students.create(student);
@@ -43,11 +44,11 @@ module.exports = function(logger,bodyParser,model,mkdirp){
             }
         })
             .then(function(doc){
-            logger.log('info','Student Registered'+student_id);
+            logger.log('info','Student Registered '+student_id);
             res.json({ success: true });
         })
             .catch(function(err){
-            logger.log('error','Error in Registering Student'+student_id);
+            logger.log('error','Error in Registering Student '+student_id);
         });
     }
 }

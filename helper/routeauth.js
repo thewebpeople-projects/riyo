@@ -1,4 +1,5 @@
-module.exports=function(){
+var config=require('../config.js');
+module.exports=function(jwt){
     return function(req, res, next) {
 
         // check header or url parameters or post parameters for token
@@ -8,9 +9,9 @@ module.exports=function(){
         if (token) {
 
             // verifies secret and checks exp
-            jwt.verify(token, app.get('superSecret'), function(err, decoded) {      
+            jwt.verify(token, config.secret, function(err, decoded) {      
                 if (err) {
-                    return res.json({ success: false, message: 'Failed to authenticate token.' });    
+                    res.status(403).json({ success: false, message: 'Failed to authenticate token.' });    
                 } else {
                     // if everything is good, save to request for use in other routes
                     req.decoded = decoded;    
@@ -22,7 +23,7 @@ module.exports=function(){
 
             // if there is no token
             // return an error
-            return res.status(403).send({ 
+            res.status(403).send({ 
                 success: false, 
                 message: 'No token provided.' 
             });

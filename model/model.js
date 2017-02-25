@@ -40,6 +40,7 @@ module.exports.students= mongoose.model('students',new Schema({
 module.exports.teachers= mongoose.model('teachers',new Schema({
     name:String,
     password: String,
+    teacherid:String,
     gender: String,
     image: String,
     dob:String,
@@ -61,6 +62,7 @@ module.exports.teachers= mongoose.model('teachers',new Schema({
 module.exports.nonteaching= mongoose.model('nonteaching',new Schema({
     name:String,
     password: String,
+    nonteachingid:String,
     gender: String,
     image: String,
     dob:String,
@@ -89,3 +91,9 @@ module.exports.marks=mongoose.model('marks',new Schema({
     rollno:String,
     scores:Object
 }));
+
+//module.exports.admin=mongoose.model('admin',new Schema({
+//    username:"admin",
+//    password:"password",
+//    id:String
+//}));
