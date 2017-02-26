@@ -39,8 +39,8 @@ module.exports.students= mongoose.model('students',new Schema({
 
 module.exports.teachers= mongoose.model('teachers',new Schema({
     name:String,
-    password: String,
     teacherid:String,
+    password: String,
     gender: String,
     image: String,
     dob:String,

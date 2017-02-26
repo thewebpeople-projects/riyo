@@ -44,11 +44,11 @@ module.exports = function(logger,bodyParser,model,mkdirp){
             }
         })
             .then(function(doc){
-            logger.log('info','Teacher Registered'+teacher_id);
+            logger.log('info','Teacher Registered '+teacher_id);
             res.json({ success: true });
         })
             .catch(function(err){
-            logger.log('error','Error in Registering teacher'+teacher_id);
+            logger.log('error','Error in Registering teacher '+teacher_id);
         });
     }
 }
